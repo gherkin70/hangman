@@ -7,10 +7,14 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "ch.qos.logback:logback-classic:1.2.3"
+    implementation 'khttp:khttp:1.0.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
     testImplementation "org.junit.jupiter:junit-jupiter:5.5.2"
     testImplementation "org.hamcrest:hamcrest:2.1"
 }

@@ -1,43 +1,53 @@
 package com.github.gherkin70
 
+import com.github.gherkin70.hangman.HangmanGameUtils
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
 
 class HangmanGameUtilsTest {
-
     private val testClass = HangmanGameUtils(WORD, GUESSES)
 
     @Test
     fun `should win when all letters marked as answered`() {
-        makeAnswer('T')
+        guessLetter('T')
         assertWon(false)
-        makeAnswer('E')
+        guessLetter('E')
         assertWon(false)
-        makeAnswer('S')
+        guessLetter('S')
+        assertWon(true)
+    }
+
+    @Test
+    fun `should win when whole word is guessed`() {
+        guessWord("ABC")
+        assertWon(false)
+        guessWord("TEST")
         assertWon(true)
     }
 
     @Test
     fun `should lose when guesses depleted to zero`() {
-        makeAnswer('A')
+        guessLetter('A')
         assertLost(false)
-        makeAnswer('B')
+        guessLetter('B')
         assertLost(true)
     }
 
     @Test
     fun `guessed letters should be considered duplicate`() {
         // correct answer
-        makeAnswer('T')
+        guessLetter('T')
         checkDuplicate('T')
 
         // incorrect answer
-        makeAnswer('A')
+        guessLetter('A')
         checkDuplicate('A')
     }
 
-    private fun makeAnswer(letter: Char) = testClass.answer(letter)
+    private fun guessLetter(letter: Char) = testClass.answerLetter(letter)
+
+    private fun guessWord(word: String) = testClass.answerWord(word)
 
     private fun checkDuplicate(letter: Char) = assertThat(testClass.checkDuplicateAnswer(letter), equalTo(true))
 
